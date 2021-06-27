@@ -99,7 +99,7 @@ def openBBL():
    webbrowser.open_new('http://bluebird-labs.com')
 
 #img = PhotoImage(file='bbirdlogo_png1.png')
-img = PhotoImage(file='icons\\bbirdlogo_png1.png')
+img = PhotoImage(file=os.path.join('icons','bbirdlogo_png1.png'))
 
 logo_button = tk.Button(profile_frame,image=img,command=openBBL,state=tk.NORMAL)
 logo_button.grid(row=25,column=0,rowspan=4, padx=(10,4),pady=(5,5),sticky = 'sw')
@@ -686,7 +686,7 @@ class CustomToolbar(NavigationToolbar2Tk):
             ('Subplots', 'Configure subplots', 'subplots', 'configure_subplots'),
             ('Save', 'Save the plot', 'filesave', 'save_figure'),
             (None, None, None, None),
-            ('Select range', 'Select data range', 'bblogo', 's_range'),
+            ('Select range', 'Select data range', 'home', 's_range'),
             )
         NavigationToolbar2Tk.__init__(self,canvas_,parent_)
 
@@ -782,7 +782,7 @@ def data_plot(x,y,voltage, minimum, maximum, duration, current,type):
        ax.format_coord = format_coord
        axs.format_coord = format_coord
 
-       toolbar.children['!button8'].config(command=select_range)
+       #toolbar.children['!button8'].config(command=select_range)
        
        toggle_selectorRS = RectangleSelector(ax, line_select_callback,\
                                        drawtype='box', useblit=True,\
@@ -1236,7 +1236,7 @@ def capture_profile():
         bytes_returned = ser.write(cmd.encode())
         
       
-        offset=time.clock()
+        offset=time.time()
         #while counter < (float(runtime_duration.get())*0.81):   
         while counter < (float(runtime_duration.get())): 
             my_file.write(str(t))
@@ -1247,7 +1247,7 @@ def capture_profile():
             t=t+1
             root.update()
         
-            counter = time.clock()-offset
+            counter = time.time()-offset
             cntr.set(counter)
             profile_frame.update()
 
@@ -1375,7 +1375,7 @@ def capture_sleep_profile():
       ser.reset_input_buffer()
       ser.reset_output_buffer()
       sleep_file=open('sleep_current.txt', mode='w', buffering =(10*1024*1024))
-      offset1=time.clock()
+      offset1=time.time()
       time.sleep(0.5)
       
       cmd = 'z'
@@ -1392,7 +1392,7 @@ def capture_sleep_profile():
            sleep_file.write('\n')
          t=t+1
          root.update()
-         counter1 = time.clock()-offset1
+         counter1 = time.time()-offset1
          cntr1.set(counter1)
          profile_frame.update()
 
@@ -1429,7 +1429,7 @@ def capture_sleep_profile():
    
       time.sleep(0.5)
 
-      offset1=time.clock()
+      offset1=time.time()
       cmd = 'z'
       bytes_returned = ser.write(cmd.encode())
 
@@ -1444,7 +1444,7 @@ def capture_sleep_profile():
             sleep_file.write('\n')
          t=t+1
          root.update()
-         counter1 = time.clock()-offset1
+         counter1 = time.time()-offset1
          cntr1.set(counter1)
          profile_frame.update()
 
